@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import ImageCard from "./ImageCard";
 import Grid from "@material-ui/core/Grid"
 
-function ImageList(props) {
+function UngroupedImageList(props) {
     return (
         <Grid container spacing={2}>
             {props.images.map((img, index) => (
@@ -14,7 +14,7 @@ function ImageList(props) {
                     sm={6}
                     md={4}
                 >
-                    <ImageCard tag={img.tag} url={img.url}/>
+                    <ImageCard index={Math.floor(Math.random() * Math.floor(1000))} tag={img.tag} url={img.url}/>
                 </Grid>
             ))}
         </Grid>
@@ -25,4 +25,4 @@ const mapStateToProps = state => ({
     images: state.catalog.images
 });
 
-export default connect(mapStateToProps, {})(ImageList);
+export default connect(mapStateToProps, {})(UngroupedImageList);

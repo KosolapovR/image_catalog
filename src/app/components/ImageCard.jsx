@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import Parser from 'html-react-parser';
 
 const useStyles = makeStyles({
     card: {
@@ -16,16 +17,15 @@ const useStyles = makeStyles({
 
 
 function ImageCard(props) {
+
     const classes = useStyles();
+
     return (
-        <div className={classes.card}>
-            <img
-                className={classes.img}
-                src={props.url}
-                alt={props.tag}
-            />
+        <div id={`img_card${props.index}`} className={classes.card}>
+            <img className={classes.img} src={props.url}/>
         </div>
     );
+
 }
 
 export default ImageCard;

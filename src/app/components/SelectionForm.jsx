@@ -5,7 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
 import {Field, reduxForm} from "redux-form";
-import {clearImgList} from "../state/catalog/operations";
+import {clearImgList, groupImageAC, ungroupImageAC} from "../state/catalog/operations";
+import {clearImgListAC} from "../state/catalog/actions";
 
 
 const useStyles = makeStyles({
@@ -17,9 +18,12 @@ const useStyles = makeStyles({
     }
 });
 
-function Form(props) {
+function Form({handleSubmit, isFetch, isGrouped, ...props}) {
 
-    const {handleSubmit, isFetch} = props;
+    const changeGroupStatus = () => {
+
+        isGrouped ? props.ungroup() : props.group();
+    }
 
     const classes = useStyles();
 
@@ -64,12 +68,15 @@ function Form(props) {
                         Очистить
                     </Button>
                     <Button
+                        onClick={() => {
+                            changeGroupStatus()
+                        }}
                         className={classes.button}
                         variant="contained"
                         size="small"
                         color="default"
                     >
-                        Сгруппировать
+                        {isGrouped ? 'Разгруппировать' : 'Сгруппировать'}
                     </Button>
                 </Grid>
             </Grid>
@@ -80,7 +87,21 @@ function Form(props) {
 const WrappedForm = reduxForm({form: 'imageSelectForm'})(Form);
 
 const mapStateToProps = state => ({
-    isFetch: state.catalog.isFetch
-})
+    isFetch: state.catalog.isFetch,
+    isGrouped: state.catalog.isGrouped
+});
 
-export default connect(mapStateToProps, {clearImgList})(WrappedForm);
+const mapDispatchToProps = dispatch => ({
+    group: () => {
+        dispatch(groupImageAC());
+    },
+    ungroup: () => {
+        dispatch(ungroupImageAC());
+    },
+    clearImgList: () => {
+        dispatch(clearImgListAC());
+    }
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(WrappedForm);
