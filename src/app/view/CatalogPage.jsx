@@ -13,13 +13,20 @@ function Alert(props) {
 
 function CatalogPage({images, requestStatus, isGrouped, ...props}) {
 
-    const [open, setOpen] = useState(false);
+    console.log(requestStatus);
 
-    useEffect(()=>{
-        if(requestStatus === 'error'){
+    const [open, setOpen] = useState(false);
+    const [statusMessage, setStatusMessage] = useState({text: '', status: ''});
+
+    useEffect(() => {
+        if (requestStatus === 'error') {
+            setStatusMessage({text: 'Произошла http ошибка', status: 'error'});
             setOpen(true);
             props.hidePopUpAC();
-
+        } else if (requestStatus === 'empty') {
+            setStatusMessage({text: 'По тегу ничего не найдено', status: 'info'});
+            setOpen(true);
+            props.hidePopUpAC();
         }
     });
 
@@ -36,8 +43,8 @@ function CatalogPage({images, requestStatus, isGrouped, ...props}) {
             <WrappedForm onSubmit={handleSubmit}/>
             {isGrouped ? <GroupedImageList/> : <UngroupedImageList/>}
             <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="error">
-                    Произошла http ошибка
+                <Alert onClose={handleClose} severity={statusMessage.status}>
+                    {statusMessage.text}
                 </Alert>
             </Snackbar>
         </>

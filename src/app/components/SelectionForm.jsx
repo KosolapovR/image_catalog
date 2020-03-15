@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import InputField from "./InputField";
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
 import {Field, reduxForm} from "redux-form";
-import {clearImgList, groupImageAC, ungroupImageAC} from "../state/catalog/operations";
+import {groupImageAC, ungroupImageAC} from "../state/catalog/operations";
 import {clearImgListAC} from "../state/catalog/actions";
+import {required} from "../utils/formValidator";
 
 
 const useStyles = makeStyles({
@@ -14,16 +15,15 @@ const useStyles = makeStyles({
         margin: '20px'
     },
     button: {
-        margin: "20px 5px"
+        margin: "25px 5px"
     }
 });
 
-function Form({handleSubmit, isFetch, isGrouped, ...props}) {
+function Form({handleSubmit, isFetch, isGrouped, error, ...props}) {
 
     const changeGroupStatus = () => {
-
         isGrouped ? props.ungroup() : props.group();
-    }
+    };
 
     const classes = useStyles();
 
@@ -34,6 +34,7 @@ function Form({handleSubmit, isFetch, isGrouped, ...props}) {
                     <Field
                         name="tag"
                         type="text"
+                        validate={[required]}
                         component={InputField}
                     />
                 </Grid>

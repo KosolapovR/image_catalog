@@ -12,7 +12,8 @@ const catalogReducer = (state = initialState, action) => {
         case types.GET_IMAGE: {
             return {
                 ...state,
-                images: [...state.images, {tag: action.payload.tag, url: action.payload.url}]};
+                images: [...state.images, {tag: action.payload.tag, url: action.payload.url}]
+            };
         }
         case types.CLEAR_IMG_LIST: {
             return {...state, images: []}
@@ -24,6 +25,7 @@ const catalogReducer = (state = initialState, action) => {
             return {...state, isFetch: false}
         }
         case types.SHOW_POP_UP: {
+            debugger;
             return {...state, request: {status: action.payload.status}}
         }
         case types.HIDE_POP_UP: {

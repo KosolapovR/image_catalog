@@ -16,24 +16,24 @@ const getImage = (tag) => {
     return (dispatch) => {
         dispatch(startFetchAC());
 
-        let first_response = axios.get(
-            `https://api.giphy.com/v1/gifs/random?api_key=FVwr5zg2EoernKOx58Dd1JiyLAxyz7rV&tag=${tag}`
+        let promise = axios.get(
+            `https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=${tag}`
         );
 
-        first_response
+        promise
             .then(
                 (response) => {
-
-                    dispatch(getImageAC({tag, url: response.data.data.images.original.url}));
-
-                    if (!response.data) {
+                    if (response.data.data.length === 0) {
+                        debugger;
                         dispatch(showPopUpAC({status: 'empty'}));
+                    }else{
+                        dispatch(getImageAC({tag, url: response.data.data.images.original.url}));
                     }
-                    dispatch(endFetchAC());
-                    dispatch(reset('imageSelectForm'));
                 })
             .catch(error => {
                 dispatch(showPopUpAC({status: 'error'}));
+            })
+            .finally(()=>{
                 dispatch(endFetchAC());
                 dispatch(reset('imageSelectForm'));
             });

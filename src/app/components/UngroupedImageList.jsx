@@ -14,7 +14,7 @@ function UngroupedImageList(props) {
                     sm={6}
                     md={4}
                 >
-                    <ImageCard index={Math.floor(Math.random() * Math.floor(1000))} tag={img.tag} url={img.url}/>
+                    <ImageCard tag={img.tag} url={img.url}/>
                 </Grid>
             ))}
         </Grid>

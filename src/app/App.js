@@ -1,6 +1,5 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import './App.css';
 import CatalogPage from "./view/CatalogPage";
 import configureStore from "./state/store";
 import {Provider} from "react-redux";
