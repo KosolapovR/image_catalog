@@ -19,10 +19,19 @@ const useStyles = makeStyles({
     }
 });
 
-function Form({handleSubmit, isFetch, isGrouped, error, ...props}) {
+function Form({
+    handleSubmit, 
+    isFetch, 
+    isGrouped, 
+    error, 
+    ungroup, 
+    group, 
+    clearImgList, 
+    ...props
+}) {
 
     const changeGroupStatus = () => {
-        isGrouped ? props.ungroup() : props.group();
+        isGrouped ? ungroup() : group();
     };
 
     const classes = useStyles();
@@ -59,7 +68,7 @@ function Form({handleSubmit, isFetch, isGrouped, error, ...props}) {
                     </Button>}
                     <Button
                         onClick={() => {
-                            props.clearImgList('imageSelectForm')
+                            clearImgList('imageSelectForm')
                         }}
                         className={classes.button}
                         variant="contained"
